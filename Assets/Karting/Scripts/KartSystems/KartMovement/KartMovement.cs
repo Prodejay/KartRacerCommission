@@ -482,11 +482,6 @@ namespace KartGame.KartSystems
                 if (!OnTrack) // Slow down in the grass
                 {
                    localVelocity.z = Mathf.MoveTowards (localVelocity.z, (m_ModifiedStats.topSpeed*(0.1f)), acceleration * m_ModifiedStats.acceleration * (deltaTime*50));
-                   Debug.Log("On Grass");
-                }
-                else
-                {
-                   Debug.Log("On Track");
                 }
             }
 
