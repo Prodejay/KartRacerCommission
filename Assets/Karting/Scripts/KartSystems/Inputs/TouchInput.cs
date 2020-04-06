@@ -4,10 +4,7 @@ using UnityEngine;
 
 namespace KartGame.KartSystems
 {
-    /// <summary>
-    /// A basic keyboard implementation of the IInput interface for all the input information a kart needs.
-    /// </summary>
-    public class KeyboardInput : MonoBehaviour, IInput
+    public class TouchInput : MonoBehaviour, IInput
     {
         public float Acceleration
         {
@@ -43,16 +40,20 @@ namespace KartGame.KartSystems
 
         bool m_FixedUpdateHappened;
 
-        bool forward;
-        bool backward;
-        bool leftward;
-        bool rightward;
+        bool accelerate;
+        bool reverse;
 
-        void Update ()
+        private void Start()
         {
-            if (Input.GetKey(KeyCode.UpArrow))
+            accelerate = false;
+            reverse = false;
+        }
+
+        void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.UpArrow))
                 m_Acceleration = 1f;
-            else if (Input.GetKey(KeyCode.DownArrow))
+            else if (Input.GetKeyDown(KeyCode.DownArrow))
                 m_Acceleration = -1f;
             else
                 m_Acceleration = 0f;
@@ -64,15 +65,15 @@ namespace KartGame.KartSystems
             else
                 m_Steering = 0f;
 
-            //m_HopHeld = Input.GetKey (KeyCode.Space);
+            m_HopHeld = Input.GetKey(KeyCode.Space);
 
             if (m_FixedUpdateHappened)
             {
                 m_FixedUpdateHappened = false;
 
-                //m_HopPressed = false;
-                //m_BoostPressed = false;
-                //m_FirePressed = false;
+                m_HopPressed = false;
+                m_BoostPressed = false;
+                m_FirePressed = false;
             }
 
             //m_HopPressed |= Input.GetKeyDown (KeyCode.Space);
@@ -80,49 +81,19 @@ namespace KartGame.KartSystems
             //m_FirePressed |= Input.GetKeyDown (KeyCode.RightControl);
         }
 
-        void FixedUpdate ()
+        void FixedUpdate()
         {
             m_FixedUpdateHappened = true;
         }
 
         public void Accelerating()
         {
-            forward = true;
-            backward = false;
-            if(forward && (!backward))
-            {
-                m_Acceleration = 1f;
-            }
+            m_Acceleration = 1f;
         }
 
         public void Reversing()
         {
-            forward = false;
-            backward = true;
-            if (!forward && (backward))
-            {
-                m_Acceleration = -1f;
-            }
-        }
-
-        public void GoingLeft()
-        {
-            leftward = true;
-            rightward = false;
-            if(leftward && !rightward)
-            {
-                m_Steering = -1f;
-            }            
-        }
-
-        public void GoingRight()
-        {
-            leftward = false;
-            rightward = true;
-            if (!leftward && rightward)
-            {
-                m_Steering = 1f;
-            }
+            m_Acceleration = -1f;
         }
     }
 }

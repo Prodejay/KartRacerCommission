@@ -43,13 +43,9 @@ public class LongButtonPress : MonoBehaviour, IPointerDownHandler, IPointerUpHan
             pointerDownTimer += Time.deltaTime;
             if (pointerDownTimer >= requiredHoldTime)
             {
-                if (onLongClick != null)
-                {
-                    onLongClick.Invoke();
-                }
+                onLongClick.Invoke();         
             }
-        }
-       
+        }     
     }
 
     private void Reset()
