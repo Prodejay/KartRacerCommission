@@ -17,14 +17,6 @@ namespace KartGame.KartSystems
         {
             get { return m_Steering; }
         }
-        public bool BoostPressed
-        {
-            get { return m_BoostPressed; }
-        }
-        public bool FirePressed
-        {
-            get { return m_FirePressed; }
-        }
         public bool HopPressed
         {
             get { return m_HopPressed; }
@@ -38,11 +30,10 @@ namespace KartGame.KartSystems
         float m_Steering;
         bool m_HopPressed;
         bool m_HopHeld;
-        bool m_BoostPressed;
-        bool m_FirePressed;
-
+      
         bool m_FixedUpdateHappened;
 
+        //bools to prevent conflicting movements
         bool forward;
         bool backward;
         bool leftward;
@@ -64,20 +55,10 @@ namespace KartGame.KartSystems
             else
                 m_Steering = 0f;
 
-            //m_HopHeld = Input.GetKey (KeyCode.Space);
-
             if (m_FixedUpdateHappened)
             {
                 m_FixedUpdateHappened = false;
-
-                //m_HopPressed = false;
-                //m_BoostPressed = false;
-                //m_FirePressed = false;
             }
-
-            //m_HopPressed |= Input.GetKeyDown (KeyCode.Space);
-            //m_BoostPressed |= Input.GetKeyDown (KeyCode.RightShift);
-            //m_FirePressed |= Input.GetKeyDown (KeyCode.RightControl);
         }
 
         void FixedUpdate ()
@@ -85,6 +66,8 @@ namespace KartGame.KartSystems
             m_FixedUpdateHappened = true;
         }
 
+
+        //movement functions accessed by touch controls
         public void Accelerating()
         {
             forward = true;
@@ -109,10 +92,10 @@ namespace KartGame.KartSystems
         {
             leftward = true;
             rightward = false;
-            if(leftward && !rightward)
+            if (leftward && !rightward)
             {
                 m_Steering = -1f;
-            }            
+            }
         }
 
         public void GoingRight()
