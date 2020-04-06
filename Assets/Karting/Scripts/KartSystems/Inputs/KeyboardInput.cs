@@ -39,6 +39,13 @@ namespace KartGame.KartSystems
         bool leftward;
         bool rightward;
 
+        private void Start()
+        {
+            forward = false;
+            backward = false;
+            rightward = false;
+            leftward = false;
+        }
         void Update ()
         {
             if (Input.GetKey(KeyCode.UpArrow))
@@ -49,9 +56,9 @@ namespace KartGame.KartSystems
                 m_Acceleration = 0f;
 
             if (Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow))
-                m_Steering = -1f;
+                GoingLeft();
             else if (!Input.GetKey(KeyCode.LeftArrow) && Input.GetKey(KeyCode.RightArrow))
-                m_Steering = 1f;
+                GoingRight();
             else
                 m_Steering = 0f;
 

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4522564040770210489}
   - component: {fileID: 4522564040769210489}
   m_Layer: 0
-  m_Name: CloudTest (6)
+  m_Name: Cloud
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -57,7 +57,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d11179e416c9b394c8176d36a0dcae52, type: 2}
+  - {fileID: 2100000, guid: deb8e8193774d9c4284ebce52d3f3e6b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
