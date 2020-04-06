@@ -442,7 +442,7 @@ namespace KartGame.KartSystems
         /**<summary>
            Slows down the kart when it's in grass.
            </summary>**/
-        void OnTriggerStay(Collider other)
+        void OnTriggerEnter(Collider other)
         {
            if (other.CompareTag("OhNoGRASS"))
            {
