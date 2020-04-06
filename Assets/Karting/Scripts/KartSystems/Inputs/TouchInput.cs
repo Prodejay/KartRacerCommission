@@ -28,8 +28,6 @@ namespace KartGame.KartSystems
         bool m_HopPressed;
         bool m_HopHeld;
 
-        bool m_FixedUpdateHappened;
-
         //bools to prevent conflicting movements
         bool forward;
         bool backward;
@@ -39,42 +37,22 @@ namespace KartGame.KartSystems
         //movement functions accessed by touch controls
         public void Accelerating()
         {
-            forward = true;
-            backward = false;
-            if (forward && (!backward))
-            {
-                m_Acceleration = 1f;
-            }
+            m_Acceleration = 1f;
         }
 
         public void Reversing()
         {
-            forward = false;
-            backward = true;
-            if (!forward && (backward))
-            {
-                m_Acceleration = -1f;
-            }
+            m_Acceleration = -1f;
         }
 
         public void GoingLeft()
         {
-            leftward = true;
-            rightward = false;
-            if (leftward && !rightward)
-            {
-                m_Steering = -1f;
-            }
+            m_Steering = -1f;
         }
 
         public void GoingRight()
         {
-            leftward = false;
-            rightward = true;
-            if (!leftward && rightward)
-            {
-                m_Steering = 1f;
-            }
+             m_Steering = 1f;
         }
     }
 }

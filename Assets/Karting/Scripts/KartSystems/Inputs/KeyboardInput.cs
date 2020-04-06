@@ -38,6 +38,10 @@ namespace KartGame.KartSystems
         bool backward;
         bool leftward;
         bool rightward;
+        bool timeToTurn;
+        bool turnButtonClicked;
+
+        float steerDirection;
 
         private void Start()
         {
@@ -45,22 +49,25 @@ namespace KartGame.KartSystems
             backward = false;
             rightward = false;
             leftward = false;
+
+            steerDirection = m_Steering;
         }
         void Update ()
         {
-            if (Input.GetKey(KeyCode.UpArrow))
+            if (Input.GetKey(KeyCode.UpArrow) && !Input.GetKey(KeyCode.DownArrow))
                 m_Acceleration = 1f;
-            else if (Input.GetKey(KeyCode.DownArrow))
+            else if (Input.GetKey(KeyCode.DownArrow) && !Input.GetKey(KeyCode.UpArrow))
                 m_Acceleration = -1f;
             else
                 m_Acceleration = 0f;
 
+
             if (Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow))
-                GoingLeft();
-            else if (!Input.GetKey(KeyCode.LeftArrow) && Input.GetKey(KeyCode.RightArrow))
-                GoingRight();
+                m_Steering = -1f;
+            else if (Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow))
+                m_Steering = 1f;
             else
-                m_Steering = 0f;
+               m_Steering = 0f;
 
             if (m_FixedUpdateHappened)
             {
@@ -77,42 +84,22 @@ namespace KartGame.KartSystems
         //movement functions accessed by touch controls
         public void Accelerating()
         {
-            forward = true;
-            backward = false;
-            if(forward && (!backward))
-            {
-                m_Acceleration = 1f;
-            }
+            m_Acceleration = 1f;
         }
 
         public void Reversing()
-        {
-            forward = false;
-            backward = true;
-            if (!forward && (backward))
-            {
-                m_Acceleration = -1f;
-            }
+        {   
+            m_Acceleration = -1f;         
         }
 
         public void GoingLeft()
         {
-            leftward = true;
-            rightward = false;
-            if (leftward && !rightward)
-            {
-                m_Steering = -1f;
-            }
+            m_Steering = -1f;
         }
 
         public void GoingRight()
         {
-            leftward = false;
-            rightward = true;
-            if (!leftward && rightward)
-            {
-                m_Steering = 1f;
-            }
+            m_Steering = 1f;
         }
     }
 }
