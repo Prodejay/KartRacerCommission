@@ -480,9 +480,7 @@ namespace KartGame.KartSystems
                     localVelocity.z = Mathf.MoveTowards (localVelocity.z, -m_ModifiedStats.reverseSpeed, -acceleration * m_ModifiedStats.reverseAcceleration * deltaTime);
                     
                 if (!OnTrack) // Slow down in the grass
-                {
-                   localVelocity.z = Mathf.MoveTowards (localVelocity.z, (m_ModifiedStats.topSpeed*(0.1f)), acceleration * m_ModifiedStats.acceleration * (deltaTime*50));
-                }
+                   localVelocity.z *= 0.96f;
             }
 
             if (groundInfo.isCapsuleTouching)
