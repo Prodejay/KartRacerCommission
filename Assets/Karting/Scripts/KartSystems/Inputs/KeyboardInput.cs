@@ -43,11 +43,20 @@ namespace KartGame.KartSystems
 
         bool m_FixedUpdateHappened;
 
+        bool accelerate;
+        bool reverse;
+
+        private void Start()
+        {
+            accelerate = false;
+            reverse = false;
+        }
+
         void Update ()
         {
-            if (Input.GetKey (KeyCode.UpArrow))
+            if (accelerate)
                 m_Acceleration = 1f;
-            else if (Input.GetKey (KeyCode.DownArrow))
+            else if (reverse)
                 m_Acceleration = -1f;
             else
                 m_Acceleration = 0f;
@@ -70,14 +79,25 @@ namespace KartGame.KartSystems
                 m_FirePressed = false;
             }
 
-            m_HopPressed |= Input.GetKeyDown (KeyCode.Space);
-            m_BoostPressed |= Input.GetKeyDown (KeyCode.RightShift);
-            m_FirePressed |= Input.GetKeyDown (KeyCode.RightControl);
+            //m_HopPressed |= Input.GetKeyDown (KeyCode.Space);
+            //m_BoostPressed |= Input.GetKeyDown (KeyCode.RightShift);
+            //m_FirePressed |= Input.GetKeyDown (KeyCode.RightControl);
         }
 
         void FixedUpdate ()
         {
             m_FixedUpdateHappened = true;
+        }
+
+        public void Accelerating()
+        {
+            accelerate = true;
+            accelerate = false;
+        }
+
+        public void Reversing()
+        {
+            m_Acceleration = -1f;
         }
     }
 }
