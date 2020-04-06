@@ -13,7 +13,7 @@ namespace KartGame.KartSystems
     /// The  movement of the kart depends on the KartStats.  These have a default value but can be adjusted by anything implementing
     /// the IKartModifier interface.
     /// </summary>
-    [RequireComponent (typeof(IInput))] [RequireComponent (typeof(Rigidbody))]
+    //[RequireComponent (typeof(IInput))] [RequireComponent (typeof(Rigidbody))]
     public class KartMovement : MonoBehaviour, IKartCollider, IMovable, IKartInfo
     {
         enum DriftState
@@ -92,6 +92,7 @@ namespace KartGame.KartSystems
         float m_AccelerationInput;
         bool m_HopPressed;
         bool m_HopHeld;
+        [SerializeField] bool OnTrack = true;
         Vector3 m_RepositionPositionDelta;
         Quaternion m_RepositionRotationDelta = Quaternion.identity;
 
@@ -437,6 +438,25 @@ namespace KartGame.KartSystems
             Quaternion deltaRotation = Quaternion.Euler (0f, turn, 0f);
             rotationStream = rotationStream * deltaRotation;
         }
+        
+        /**<summary>
+           Slows down the kart when it's in grass.
+           </summary>**/
+        void OnTriggerEnter(Collider other)
+        {
+           if (other.CompareTag("OhNoGRASS"))
+           {
+              OnTrack = false;
+           }
+        }
+        
+        void OnTriggerExit(Collider other)
+        {
+           if (other.CompareTag("OhNoGRASS"))
+           {
+              OnTrack = true;
+           }
+        }
 
         /// <summary>
         /// Calculates the velocity of the kart.
@@ -458,6 +478,9 @@ namespace KartGame.KartSystems
                     localVelocity.z = Mathf.MoveTowards (localVelocity.z, 0f, -acceleration * m_ModifiedStats.braking * deltaTime);
                 else                                                           // Negative acceleration input and not going forwards.
                     localVelocity.z = Mathf.MoveTowards (localVelocity.z, -m_ModifiedStats.reverseSpeed, -acceleration * m_ModifiedStats.reverseAcceleration * deltaTime);
+                    
+                if (!OnTrack) // Slow down in the grass
+                   localVelocity.z *= 0.96f;
             }
 
             if (groundInfo.isCapsuleTouching)
@@ -481,6 +504,8 @@ namespace KartGame.KartSystems
                 OnHop.Invoke ();
             }
         }
+        
+        
 
         /// <summary>
         /// Starts a drift if the kart lands with a sufficient turn.
