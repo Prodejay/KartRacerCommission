@@ -64,8 +64,7 @@ namespace KartGame.KartSystems
 
             if (Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow))
             {
-                GoingLeft();
-                m_Steering = steerDirection;
+                m_Steering = -1f;
             }          
             else if (Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow))
                 m_Steering = 1f;
