@@ -26,8 +26,8 @@ namespace KartGame.KartSystems
             get { return m_HopHeld; }
         }
 
-        float m_Acceleration;
-        float m_Steering;
+        public float m_Acceleration;
+        public float m_Steering;
         bool m_HopPressed;
         bool m_HopHeld;
       
@@ -36,8 +36,8 @@ namespace KartGame.KartSystems
         //bools to prevent conflicting movements
         bool forward;
         bool backward;
-        bool leftward;
-        bool rightward;
+        public bool leftward;
+        public bool rightward;
         bool timeToTurn;
         bool turnButtonClicked;
 
@@ -63,11 +63,26 @@ namespace KartGame.KartSystems
 
 
             if (Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow))
-                m_Steering = -1f;
+            {
+                GoingLeft();
+                m_Steering = steerDirection;
+            }          
             else if (Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow))
                 m_Steering = 1f;
             else
-               m_Steering = 0f;
+                m_Steering = 0f;
+
+            //Touch Controls for Steering
+            if (leftward && !rightward)
+            {
+                m_Steering = -1f;
+            }
+            else if (!leftward && rightward)
+            {
+                m_Steering = 1f;
+            }
+            else
+                m_Steering = 0f;
 
             if (m_FixedUpdateHappened)
             {
@@ -94,12 +109,12 @@ namespace KartGame.KartSystems
 
         public void GoingLeft()
         {
-            m_Steering = -1f;
+            leftward = true;
         }
 
         public void GoingRight()
         {
-            m_Steering = 1f;
+            rightward = true;
         }
     }
 }

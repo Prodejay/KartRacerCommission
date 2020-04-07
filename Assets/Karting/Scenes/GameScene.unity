@@ -2425,7 +2425,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 195110696}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6d07558ea2e6404195339ca13c63607, type: 3}
+  m_Script: {fileID: 11500000, guid: 3faa6e6c299baf043bb038b834562e3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   requiredHoldTime: 0
@@ -12609,7 +12609,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 897080246}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6d07558ea2e6404195339ca13c63607, type: 3}
+  m_Script: {fileID: 11500000, guid: 3faa6e6c299baf043bb038b834562e3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   requiredHoldTime: 0
@@ -20074,6 +20074,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1944612931, guid: 8a2015a9601d162459389c9b9d1437fc, type: 3}
+      propertyPath: m_Steering
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 515638437982878383, guid: 8a2015a9601d162459389c9b9d1437fc,
         type: 3}
       propertyPath: m_Enabled
@@ -23693,7 +23697,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!82 &1687723347
 AudioSource:
   m_ObjectHideFlags: 0
