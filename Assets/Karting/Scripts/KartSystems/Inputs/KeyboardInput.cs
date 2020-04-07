@@ -38,10 +38,9 @@ namespace KartGame.KartSystems
         bool backward;
         public bool leftward;
         public bool rightward;
-        bool timeToTurn;
-        bool turnButtonClicked;
-
-        float steerDirection;
+        //bools to set which control scheme to follow
+        bool mobileControlActive;
+        bool computerControlsActive;
 
         private void Start()
         {
@@ -50,39 +49,46 @@ namespace KartGame.KartSystems
             rightward = false;
             leftward = false;
 
-            steerDirection = m_Steering;
+            //setting the control scheme used by taking it from the controllerPlatformHandler script
+            mobileControlActive = ControllerPlatformHandler.instance.touchControls;
+            computerControlsActive = ControllerPlatformHandler.instance.computerControls;
         }
         void Update ()
-        {
-            if (Input.GetKey(KeyCode.UpArrow) && !Input.GetKey(KeyCode.DownArrow))
-                m_Acceleration = 1f;
-            else if (Input.GetKey(KeyCode.DownArrow) && !Input.GetKey(KeyCode.UpArrow))
-                m_Acceleration = -1f;
-            else
-                m_Acceleration = 0f;
-
-
-            if (Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow))
+        {           
+            if (computerControlsActive)
             {
-                m_Steering = -1f;
-            }          
-            else if (Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow))
-                m_Steering = 1f;
-            else
-                m_Steering = 0f;
+                if (Input.GetKey(KeyCode.UpArrow) && !Input.GetKey(KeyCode.DownArrow))
+                    m_Acceleration = 1f;
+                else if (Input.GetKey(KeyCode.DownArrow) && !Input.GetKey(KeyCode.UpArrow))
+                    m_Acceleration = -1f;
+                else
+                    m_Acceleration = 0f;
+
+                if (Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow))
+                {
+                    m_Steering = -1f;
+                }
+                else if (Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow))
+                    m_Steering = 1f;
+                else
+                    m_Steering = 0f;
+            }
 
             //Touch Controls for Steering
-            if (leftward && !rightward)
+            if (mobileControlActive)
             {
-                m_Steering = -1f;
+                if (leftward && !rightward)
+                {
+                    m_Steering = -1f;
+                }
+                else if (!leftward && rightward)
+                {
+                    m_Steering = 1f;
+                }
+                else
+                    m_Steering = 0f;
             }
-            else if (!leftward && rightward)
-            {
-                m_Steering = 1f;
-            }
-            else
-                m_Steering = 0f;
-
+          
             if (m_FixedUpdateHappened)
             {
                 m_FixedUpdateHappened = false;

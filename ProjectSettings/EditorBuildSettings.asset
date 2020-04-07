@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Karting/Scenes/TitleScreen.unity
+    guid: 9ee2617f66ba90f448468c13178f5e13
+  - enabled: 1
     path: Assets/Karting/Scenes/GameScene.unity
     guid: f8c7069e6d9b2124b861144ca83d31e8
   m_configObjects: {}
