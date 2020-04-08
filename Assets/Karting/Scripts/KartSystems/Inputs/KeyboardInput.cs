@@ -17,14 +17,6 @@ namespace KartGame.KartSystems
         {
             get { return m_Steering; }
         }
-        public bool BoostPressed
-        {
-            get { return m_BoostPressed; }
-        }
-        public bool FirePressed
-        {
-            get { return m_FirePressed; }
-        }
         public bool HopPressed
         {
             get { return m_HopPressed; }
@@ -34,50 +26,100 @@ namespace KartGame.KartSystems
             get { return m_HopHeld; }
         }
 
-        float m_Acceleration;
-        float m_Steering;
+        public float m_Acceleration;
+        public float m_Steering;
         bool m_HopPressed;
         bool m_HopHeld;
-        bool m_BoostPressed;
-        bool m_FirePressed;
-
+      
         bool m_FixedUpdateHappened;
 
-        void Update ()
+        //bools to prevent conflicting movements
+        bool forward;
+        bool backward;
+        public bool leftward;
+        public bool rightward;
+        //bools to set which control scheme to follow
+        bool mobileControlActive;
+        bool computerControlsActive;
+
+        private void Start()
         {
-            if (Input.GetKey (KeyCode.UpArrow))
-                m_Acceleration = 1f;
-            else if (Input.GetKey (KeyCode.DownArrow))
-                m_Acceleration = -1f;
-            else
-                m_Acceleration = 0f;
+            forward = false;
+            backward = false;
+            rightward = false;
+            leftward = false;
 
-            if (Input.GetKey (KeyCode.LeftArrow) && !Input.GetKey (KeyCode.RightArrow))
-                m_Steering = -1f;
-            else if (!Input.GetKey (KeyCode.LeftArrow) && Input.GetKey (KeyCode.RightArrow))
-                m_Steering = 1f;
-            else
-                m_Steering = 0f;
+            //setting the control scheme used by taking it from the controllerPlatformHandler script
+            mobileControlActive = ControllerPlatformHandler.instance.touchControls;
+            computerControlsActive = ControllerPlatformHandler.instance.computerControls;
+        }
+        void Update ()
+        {           
+            if (computerControlsActive)
+            {
+                if (Input.GetKey(KeyCode.UpArrow) && !Input.GetKey(KeyCode.DownArrow))
+                    m_Acceleration = 1f;
+                else if (Input.GetKey(KeyCode.DownArrow) && !Input.GetKey(KeyCode.UpArrow))
+                    m_Acceleration = -1f;
+                else
+                    m_Acceleration = 0f;
 
-            m_HopHeld = Input.GetKey (KeyCode.Space);
+                if (Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow))
+                {
+                    m_Steering = -1f;
+                }
+                else if (Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow))
+                    m_Steering = 1f;
+                else
+                    m_Steering = 0f;
+            }
 
+            //Touch Controls for Steering
+            if (mobileControlActive)
+            {
+                if (leftward && !rightward)
+                {
+                    m_Steering = -1f;
+                }
+                else if (!leftward && rightward)
+                {
+                    m_Steering = 1f;
+                }
+                else
+                    m_Steering = 0f;
+            }
+          
             if (m_FixedUpdateHappened)
             {
                 m_FixedUpdateHappened = false;
-
-                m_HopPressed = false;
-                m_BoostPressed = false;
-                m_FirePressed = false;
             }
-
-            m_HopPressed |= Input.GetKeyDown (KeyCode.Space);
-            m_BoostPressed |= Input.GetKeyDown (KeyCode.RightShift);
-            m_FirePressed |= Input.GetKeyDown (KeyCode.RightControl);
         }
 
         void FixedUpdate ()
         {
             m_FixedUpdateHappened = true;
+        }
+
+
+        //movement functions accessed by touch controls
+        public void Accelerating()
+        {
+            m_Acceleration = 1f;
+        }
+
+        public void Reversing()
+        {   
+            m_Acceleration = -1f;         
+        }
+
+        public void GoingLeft()
+        {
+            leftward = true;
+        }
+
+        public void GoingRight()
+        {
+            rightward = true;
         }
     }
 }
