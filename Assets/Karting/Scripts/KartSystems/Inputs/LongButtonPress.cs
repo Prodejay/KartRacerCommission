@@ -28,6 +28,8 @@ public class LongButtonPress : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     {
         Reset();
         Debug.Log("OnPointerUp");
+        FindObjectOfType<KartGame.KartSystems.KeyboardInput>().forward = false;
+        FindObjectOfType<KartGame.KartSystems.KeyboardInput>().backward = false;
     }
     // Start is called before the first frame update
     void Start()

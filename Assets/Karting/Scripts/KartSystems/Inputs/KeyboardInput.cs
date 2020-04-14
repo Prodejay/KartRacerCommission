@@ -34,8 +34,8 @@ namespace KartGame.KartSystems
         bool m_FixedUpdateHappened;
 
         //bools to prevent conflicting movements
-        bool forward;
-        bool backward;
+        public bool forward;
+        public bool backward;
         public bool leftward;
         public bool rightward;
         //bools to set which control scheme to follow
@@ -65,9 +65,7 @@ namespace KartGame.KartSystems
                     m_Acceleration = 0f;
 
                 if (Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow))
-                {
                     m_Steering = -1f;
-                }
                 else if (Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow))
                     m_Steering = 1f;
                 else
@@ -79,25 +77,17 @@ namespace KartGame.KartSystems
             {
 
                 if (forward && !backward)
-                {
                     m_Acceleration = 1f;
-                }
                 else if (!forward && backward)
-                {
-                    m_Steering = -1f;
-                }
+                    m_Acceleration = -1f;
                 else
-                    m_Steering = 0f;
+                    m_Acceleration = 0f;
 
 
                 if (leftward && !rightward)
-                {
                     m_Steering = -1f;
-                }
                 else if (!leftward && rightward)
-                {
                     m_Steering = 1f;
-                }
                 else
                     m_Steering = 0f;
             }
