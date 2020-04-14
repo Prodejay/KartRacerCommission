@@ -77,6 +77,19 @@ namespace KartGame.KartSystems
             //Touch Controls for Steering
             if (mobileControlActive)
             {
+
+                if (forward && !backward)
+                {
+                    m_Acceleration = 1f;
+                }
+                else if (!forward && backward)
+                {
+                    m_Steering = -1f;
+                }
+                else
+                    m_Steering = 0f;
+
+
                 if (leftward && !rightward)
                 {
                     m_Steering = -1f;
@@ -104,12 +117,12 @@ namespace KartGame.KartSystems
         //movement functions accessed by touch controls
         public void Accelerating()
         {
-            m_Acceleration = 1f;
+            forward = true;
         }
 
         public void Reversing()
-        {   
-            m_Acceleration = -1f;         
+        {
+            backward = true;        
         }
 
         public void GoingLeft()
